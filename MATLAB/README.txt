@@ -1,8 +1,9 @@
-Run in this order to see the animation played:
-SelfBalanceScript.m
-SelfBalance.slx
-SelfBalanceAnim.m
+To run the simulation follow these steps.
 
-To change initial angle, open SelfBalanceScript.m and change x0.
-
-To change desired angle, open SelfBalance.slx and change desired angle input.
+1.
+Run the matlab script, PendulumTF.m.
+You can change variables here in the script.
+2.
+Open the simulink file PendulumModel.slx.
+Press the green play button to watch the simulation.
+Double-click the scope to see the change in angle (Yellow) and position (Blue).
