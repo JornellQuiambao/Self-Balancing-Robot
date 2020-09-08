@@ -1,0 +1,28 @@
+<?xml version = "1.0" ?>
+<robot name = "SelfBalancingRobotv0.1" xmlns:xacro ="https://ros.org/wiki/xacro" >
+	<xacro:maco name "Chassis_mesh">
+		<geometry>
+			<mesh filename="package://robot_model_1/meshes/chassis.STL"/>
+		</geometry>
+	</xacro:macro>
+	<xacro:maco name "wheel_mesh">
+		<geometry>
+			<mesh filename="package://robot_model_1/meshes/right_wheel.STL"/>
+		</geometry>
+	</xacro:macro>
+
+	<link name = "Chassis">
+		<visual>
+			<origin rpy="0 0 0" xyz = "0 0 0"/>
+			<xacro:Chassis_mesh/>
+		</visual>
+		<collision>
+			<origin rpy="0 0 0" xyz = "0 0 0"/>
+			<xacro:Chassis_mesh/>
+		</collision>
+		<inertial>
+			<mass value = "4.91"/>
+			<inertia ixx = "0.30" iyy = "0.22" izz = "0.34" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+	</link> 
+	
+</robot>

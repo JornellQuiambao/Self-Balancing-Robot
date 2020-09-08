@@ -1,0 +1,27 @@
+<?xml version ="1.0" encoding = "UTF-8"?>
+
+<launch>
+	<include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+	
+	<arg name = "x" value = "0.0"/>
+	<arg name = "y" value = "0.0"/>
+	<arg name = "z" value = "0.421"/>
+
+	<node
+	 	name = "urdf_spawner"
+	 	pkg ="gazebo_ros"
+	 	type ="spawn_model"
+	 	output ="screen" 
+		args ="-file $(find robot_model_1)/urdf/robot02.urdf -urdf -x $(arg x) -y $(arg y) -z $(arg z) -model robot01"/>
+	<node 
+		pkg= "robot_model_1" 
+		type = "balance.py" 
+		name = "Balance" 
+		output="screen"/> 
+
+	<!--<node
+    	name="fake_joint_calibration"
+    	pkg="rostopic"
+    	type="rostopic"
+    	args="pub /calibrated std_msgs/Bool true" />-->
+</launch>

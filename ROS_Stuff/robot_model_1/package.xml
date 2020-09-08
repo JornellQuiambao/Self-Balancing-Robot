@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>robot_model_1</name>
+    <version>0.1.0</version>
+
+    <description> v0.1.0 contains the robot model, adding the controller in a later version</description>
+    <maintainer email = "khem.holden@gmail.com">Khem Holden</maintainer>
+
+    <license>BSD</license>
+    <buildtool_depend>catkin</buildtool_depend>
+    <build_depend>roslaunch</build_depend>
+    <build_depend>rospy</build_depend>
+    <exec_depend>rospy</exec_depend>
+</package>

@@ -1,0 +1,145 @@
+<?xml version = "1.0" ?>
+<robot name = "SelfBalancingRobotv0.2">
+	<link name= "base_footprint">
+		<visual>
+			<origin xyz="0 0 0" rpy = "0 0 0"/>
+			<geometry>
+				<box size="0.001 0.001 0.001"/>
+			</geometry>
+		</visual>
+	</link>
+
+	<link name = "Chassis">
+		<visual>
+			<origin rpy="0 0 0" xyz = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_Chassis_3.stl"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 0" xyz = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_Chassis_3.stl"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "0 0 0" rpy = "0 0 0"/>
+			<mass value = "28.426"/>
+			<inertia iyy = "3.441" izz = "3.0004" ixx = "2.529" ixy ="0.0" ixz = "0.0" iyz = "0.000"/>
+		</inertial>
+	</link> 
+	<joint name="base_link_joint" type="fixed">
+		<parent link="base_footprint"/>
+		<child link="Chassis"/>
+	</joint>
+
+
+
+	<link name="right_wheel">
+		<visual>
+			<origin xyz = "0.329 -0.007 0.142" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_Wheel_1.stl"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz = "0.329 -0.007 0.142" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_Wheel_1.stl"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "-0.037 -0.007 0" />
+			<mass value = "5.449"/>
+			<inertia iyy = "0.109" izz = "0.109" ixx = "0.214" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link>
+
+	 <joint name="right_wheel_joint" type = "continuous">
+		<parent link="Chassis"/>
+		<child link = "right_wheel"/>
+		<origin xyz = "-0.314 0.007  -0.142" rpy = "0 0 0"/>
+		<limit effort = "10000" velocity = "10000"/>
+		<axis xyz = "1 0 0"/>
+	</joint> 
+
+
+
+	<link name="left_wheel">
+		<visual>
+			<origin xyz = "-0.329 -0.007 0.142" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_Wheel_2.stl"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz = "-0.329 -0.007 0.142" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_Wheel_2.stl"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "0.037 -0.007 0"/>
+			<mass value = "5.449"/>
+			<inertia iyy = "0.109" izz = "0.109" ixx = "0.214" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link>
+
+	 <joint name="left_wheel_joint" type = "continuous">
+		<parent link="Chassis"/>
+		<child link = "left_wheel"/>
+		<origin xyz = "0.314 0.007 -0.142" rpy = "0 0 0"/>
+		<axis xyz = "1 0 0"/>
+	
+	</joint> 
+	
+	<gazebo>
+		<selfCollide>true</selfCollide>
+	</gazebo>
+	<gazebo reference ="left_wheel">
+		<mu1>0.90</mu1>
+		<mu2>0.65</mu2>
+
+	</gazebo>
+	<gazebo reference ="right_wheel">
+		<mu1>0.90</mu1>
+		<mu2>0.65</mu2>
+
+	</gazebo>
+	<gazebo>
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<alwaysOn>true</alwaysOn>
+			<legacyMode>false</legacyMode>
+			<updateRate>200</updateRate>
+			<leftJoint> left_wheel_joint</leftJoint>
+			<rightJoint>right_wheel_joint</rightJoint>
+			<wheelSeparation>0.630</wheelSeparation>
+			<wheelDiameter>0.559</wheelDiameter>
+			<wheelTorque>10</wheelTorque>
+			<commandTopic>cmd_vel</commandTopic>
+    		<odometryTopic>odom</odometryTopic>
+    		<odometryFrame>odom</odometryFrame>
+    		<robotBaseFrame>base_footprint</robotBaseFrame>
+		</plugin>
+	</gazebo>	
+	<gazebo reference="Chassis">
+		<gravity>true</gravity>
+		<sensor name="imu_sensor" type="imu">
+		  <always_on>true</always_on>
+		  <update_rate>200</update_rate>
+		  <visualize>true</visualize>
+		  <topic>__default_topic__</topic>
+		  <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+		    <topicName>imu</topicName>
+		    <bodyName>base_footprint</bodyName>
+		    <updateRateHZ>10.0</updateRateHZ>
+		    <gaussianNoise>0.0</gaussianNoise>
+		    <xyzOffset>0 0 0</xyzOffset>
+		    <rpyOffset>0 0 0</rpyOffset>
+		    <frameName>Chassis</frameName>
+		  </plugin>
+		  <pose>0 0 0 0 0 0</pose>
+		</sensor>
+	</gazebo>
+	
+</robot>

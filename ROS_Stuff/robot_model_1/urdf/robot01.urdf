@@ -1,0 +1,125 @@
+<?xml version = "1.0" ?>
+<robot name = "SelfBalancingRobotv0.1">
+
+	<link name = "Chassis">
+		<visual>
+			<origin rpy="0 0 0" xyz = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_assembly-1.STL"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 0" xyz = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/robot_assembly-1.STL"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "0 0 0" rpy = "0 0 0"/>
+			<mass value = "4.91"/>
+			<inertia iyy = "0.30" izz = "0.22" ixx = "0.34" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link> 
+
+
+
+
+	<link name="right_wheel">
+		<visual>
+			<origin xyz = "0 -0.2344 0.26286" rpy = "0 0 3.1415927"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/right_wheel-1.STL"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz = "0 -0.2344 0.26286" rpy = "0 0 3.1415927"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/right_wheel-1.STL"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "0 0.01174 0" />
+			<mass value = "0.1"/>
+			<inertia iyy = "0.000068067" izz = "0.000038287" ixx = "0.000038287" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link>
+
+	 <joint name="right_wheel_joint" type = "continuous">
+		<parent link="Chassis"/>
+		<child link = "right_wheel"/>
+		<origin xyz = "0 -0.2344 -0.26286" rpy = "0 0 3.1415927"/>
+		<limit effort = "10000" velocity = "10000"/>
+		<axis xyz = "0 1 0"/>
+	</joint> 
+
+
+
+	<link name="left_wheel">
+		<visual>
+			<origin xyz = "0 -0.2344 0.26286" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/left_wheel-1.STL"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz = "0 -0.2344 0.26286" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/left_wheel-1.STL"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "0 0.01174 0"/>
+			<mass value = "0.1"/>
+			<inertia iyy = "0.000068067" izz = "0.000038287" ixx = "0.000038287" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link>
+
+	 <joint name="left_wheel_joint" type = "continuous">
+		<parent link="Chassis"/>
+		<child link = "left_wheel"/>
+		<origin xyz = "0 0.2344 -0.26286" rpy = "0 0 0"/>
+		<axis xyz = "0 1 0"/>
+	
+	</joint> 
+	
+	<gazebo>
+		<selfCollide>true</selfCollide>
+	</gazebo>
+	
+	<gazebo>
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<alwaysOn>true</alwaysOn>
+			<legacyMode>false</legacyMode>
+			<updateRate>40</updateRate>
+			<leftJoint> left_weel_joint</leftJoint>
+			<rightJoint>right_wheel_joint</rightJoint>
+			<wheelSeparation>0.52572</wheelSeparation>
+			<wheelDiameter>0.076</wheelDiameter>
+			<wheelTorque>0.045</wheelTorque>
+			<commandTopic>cmd_vel</commandTopic>
+    		<odometryTopic>odom</odometryTopic>
+    		<odometryFrame>odom</odometryFrame>
+    		<robotBaseFrame>Chassis</robotBaseFrame>
+		</plugin>
+	</gazebo>	
+	<gazebo reference="Chassis">
+		<gravity>true</gravity>
+		<sensor name="imu_sensor" type="imu">
+		  <always_on>true</always_on>
+		  <update_rate>100</update_rate>
+		  <visualize>true</visualize>
+		  <topic>__default_topic__</topic>
+		  <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+		    <topicName>imu</topicName>
+		    <bodyName>Chassis</bodyName>
+		    <updateRateHZ>10.0</updateRateHZ>
+		    <gaussianNoise>0.0</gaussianNoise>
+		    <xyzOffset>0 0 0</xyzOffset>
+		    <rpyOffset>0 0 0</rpyOffset>
+		    <frameName>Chassis</frameName>
+		  </plugin>
+		  <pose>0 0 0 0 0 0</pose>
+		</sensor>
+	</gazebo>
+	
+</robot>

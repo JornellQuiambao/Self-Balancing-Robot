@@ -1,0 +1,46 @@
+<?xml version = "1.0" ?>
+<robot name = "SelfBalancingRobotv0.1">
+	<link name = "Chassis">
+		<visual>
+			<origin rpy="0 0 0" xyz = "0 0 0.00498"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/chassis.STL"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin rpy="0 0 0" xyz = "0 0 0.00498"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/chassis.STL"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "0.2286 0.24 0.26498"/>
+			<mass value = "4.91"/>
+			<inertia iyy = "0.30" izz = "0.22" ixx = "0.34" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link> 
+	<link name="right_wheel">
+		<visual>
+			<origin xyz = "0.1906 -0.02 0.0" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/left_wheel.STL"/>
+			</geometry>
+		</visual>
+		<collision>
+			<origin xyz = "0.1906 -0.02 0.0" rpy = "0 0 0"/>
+			<geometry>
+				<mesh filename="package://robot_model_1/meshes/left_wheel.STL"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<origin xyz = "228.6 -0.00826 0.038"/>
+			<mass value = "0.1"/>
+			<inertia iyy = "0.000068067" izz = "0.000038287" ixx = "0.000038287" ixy ="0.0" ixz = "0.0" iyz = "0.0"/>
+		</inertial>
+	</link>
+	<joint name="right_wheel_joint" type = "continuous">
+		<parent link = "Chassis"/>
+		<child link = "right_wheel"/>
+		<orign xyz = "0.2286 0 0.03" rpy = "0 0 0"/>
+	</joint>
+</robot>
